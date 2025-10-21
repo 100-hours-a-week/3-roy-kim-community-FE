@@ -7,9 +7,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>로그인</title>
   <!-- Page-specific styles -->
+  <link rel="stylesheet" href="/component/header/header.css" />
   <link rel="stylesheet" href="login.css" />
 </head>
 <body>
+  <div id="header-placeholder"></div>
   <main class="container">
     <section class="login-page" aria-labelledby="login-title">
       <h1 id="login-title">로그인</h1>
@@ -43,7 +45,13 @@
       <div id="message" aria-live="polite"></div>
     </section>
   </main>
-
+  <script>
+  fetch("/component/header/header.html")
+    .then(res => res.text())
+    .then(html => {
+      document.getElementById("header-placeholder").innerHTML = html;
+    });
+</script>
   <!-- Page-specific scripts -->
   <script src="login.js"></script>
 </body>
