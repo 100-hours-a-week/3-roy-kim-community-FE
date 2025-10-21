@@ -1,5 +1,3 @@
-
-
 /* General page layout */
 body {
   margin: 0;
@@ -56,6 +54,63 @@ form {
   border-color: #0078ff;
   outline: none;
   box-shadow: 0 0 0 3px rgba(0, 120, 255, 0.15);
+}
+/* Profile picture upload area */
+.profile-picture {
+  text-align: center;
+}
+
+.profile-picture .hint { color: #e53935; }
+
+.upload-area {
+  width: 280px;
+  height: 280px;
+  margin: 12px auto 8px;           /* centered under label */
+  border-radius: 50%;
+  background-color: #c9c9c9;       /* grey fill like screenshot */
+  position: relative;
+  cursor: pointer;
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,0.08); /* subtle edge */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.upload-area:hover {
+  filter: brightness(0.98);
+}
+
+.upload-area img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  display: none;            /* shown by JS after file select */
+}
+
+/* Center plus icon */
+.upload-area::before,
+.upload-area::after {
+  content: "";
+  position: absolute;
+  background: #222;
+  opacity: 0.85;
+}
+.upload-area::before { /* vertical bar */
+  width: 2px;
+  height: 38%;
+}
+.upload-area::after {  /* horizontal bar */
+  height: 2px;
+  width: 38%;
+}
+
+/* Hide plus when an image is present (JS can add .has-image) */
+.upload-area.has-image::before,
+.upload-area.has-image::after {
+  display: none;
 }
 
 /* Buttons */
