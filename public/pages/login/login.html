@@ -1,0 +1,50 @@
+
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>로그인</title>
+  <!-- Page-specific styles -->
+  <link rel="stylesheet" href="login.css" />
+</head>
+<body>
+  <main class="container">
+    <section class="login-page" aria-labelledby="login-title">
+      <h1 id="login-title">로그인</h1>
+
+      <form id="login-form" method="post" action="/api/login" novalidate>
+        <!-- Email -->
+        <div class="field">
+          <label for="email">이메일*</label>
+          <div>
+            <input id="email" name="email" type="email" placeholder="you@example.com" required autocomplete="email" />
+          </div>
+          <div class="hint" data-for="email" aria-live="polite"></div>
+        </div>
+
+        <!-- Password -->
+        <div class="field">
+          <label for="password">비밀번호*</label>
+          <div>
+            <input id="password" name="password" type="password" placeholder="비밀번호" required minlength="8" autocomplete="current-password" />
+          </div>
+          <div class="hint" data-for="password" aria-live="polite"></div>
+        </div>
+
+        <!-- Actions -->
+        <div class="actions">
+          <button type="submit" id="login-btn">로그인</button>
+          <a class="ghost-btn" href="../signup/signup.html" id="go-signup" aria-label="회원가입 페이지로 이동">회원가입 하러 가기</a>
+        </div>
+      </form>
+
+      <div id="message" aria-live="polite"></div>
+    </section>
+  </main>
+
+  <!-- Page-specific scripts -->
+  <script src="login.js"></script>
+</body>
+</html>

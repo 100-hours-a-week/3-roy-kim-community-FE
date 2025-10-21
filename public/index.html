@@ -10,20 +10,22 @@
   <header>
     <nav>
       <a href = "#/signup">/signup</a>
+      <div></div>
+      <a href = "#/login">/login</a>
     </nav>
   </header>
-  <main id = "app"><!--이곳에 페이지 컨텐트 주입-->></main>
+  <main id="app"><!--이곳에 페이지 컨텐트 주입--></main>
   <script type="module">
   const routes = {
-    '/': '/pages/board/board.html',
-    '/board': '/pages/board/board.html',
-    '/postAdd': '/pages/postAdd/postAdd.html',
-    '/postView': '/pages/postView/postView.html',
-    '/postUpdate': '/pages/postUpdate/postUpdate.html',
-    '/login': '/pages/login/login.html',
-    '/signup': '/pages/signup/signup.html',
-    '/updateUserInfo': '/pages/updateUserInfo/updateUserInfo.html',
-    '/updateUserPassword': '/pages/updateUserPassword/updateUserPassword.html'
+    '/': './pages/board/board.html',
+    '/board': './pages/board/board.html',
+    '/postAdd': './pages/postAdd/postAdd.html',
+    '/postView': './pages/postView/postView.html',
+    '/postUpdate': './pages/postUpdate/postUpdate.html',
+    '/login': './pages/login/login.html',
+    '/signup': './pages/signup/signup.html',
+    '/updateUserInfo': './pages/updateUserInfo/updateUserInfo.html',
+    '/updateUserPassword': './pages/updateUserPassword/updateUserPassword.html'
   };
   const app = document.getElementById(`app`);
   async function loadRoute() {
@@ -44,7 +46,7 @@
 
   async function loadPageScript(hash) {
     const name = (hash || '/').replace(/^\//, '') || 'board';
-    const scriptPath = `/pages/${name}/${name}.js`;
+    const scriptPath = `./pages/${name}/${name}.js`;
 
     // remove previous dynamic script
     const prev = document.getElementById('page-script');
