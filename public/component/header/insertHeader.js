@@ -17,7 +17,7 @@ export async function mountHeader(placeholderId = "header-placeholder", opts = {
     const res = await fetch("/component/header/header.html", { cache: "no-store" });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const html = await res.text();
-  mount.innerHTML = html;
+    mount.innerHTML = html;
   } catch (err) {
     console.error("[mountHeader] Failed to load header.html:", err);
     return null;
@@ -39,13 +39,14 @@ export async function mountHeader(placeholderId = "header-placeholder", opts = {
   return refs;
 }
 
-export function addProfileDropdown(container, user) {
-  let avatarUrl = user.avatarUrl;
+function addProfileDropdown(container) {
+  // Prefer a stored user profile image, else fallback initial
+  let avatarUrl = "/assets/images/default-user.png";
+  try { avatarUrl = localStorage.getItem("profilePicture"); } catch(_) {}
   if (!avatarUrl) {
-    avatarUrl = "/assets/images/default-user.png"; // path to your blank user image
+    avatarUrl = "/assets/images/user.png"; // 기본 이미지
   }
-  // ... rest of the function implementation
-}
+
   const img = document.createElement("img");
   img.className = "header-avatar";
   img.alt = "사용자 프로필";
