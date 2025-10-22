@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>게시글 작성</title>
+  <link rel="stylesheet" href="/component/header/header.css" />
+  <link rel="stylesheet" href="./postAdd.css" />
+  <script type="module">
+    import { mountHeader } from "/component/header/insertHeader.js";
+    (async () => { await mountHeader(); })();
+  </script>
+  <script defer src="./postAdd.js"></script>
+</head>
+<body>
+  <div id="header-placeholder"></div>
+
+  <main class="container" aria-labelledby="page-title">
+    <h1 id="page-title" class="page-title">게시글 작성</h1>
+
+    <form id="post-form" class="post-form">
+      <div class="field">
+        <label for="post-content" class="label">내용</label>
+        <textarea id="post-content" name="content" placeholder="무엇이든 적어보세요..." rows="12" required></textarea>
+      </div>
+
+      <div class="field inline">
+        <label class="label">이미지</label>
+        <input id="post-image" type="file" accept="image/*" hidden />
+        <button id="upload-btn" type="button" class="btn">이미지 업로드</button>
+      </div>
+
+      <div id="preview" class="preview" aria-live="polite" hidden>
+        <img id="preview-img" alt="선택한 이미지 미리보기" />
+        <button id="remove-img" type="button" class="btn ghost">이미지 제거</button>
+      </div>
+
+      <div class="actions">
+        <button id="submit-btn" type="submit" class="btn primary">완료</button>
+      </div>
+
+      <p id="error" class="message error" aria-live="polite"></p>
+      <p id="success" class="message success" aria-live="polite"></p>
+    </form>
+  </main>
+</body>
+</html>
