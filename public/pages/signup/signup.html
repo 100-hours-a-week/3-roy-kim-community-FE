@@ -67,26 +67,15 @@
   </main>
 
   <script type="module">
-  import { mountHeader } from "/component/header/insertHeader.js";
-  (async () => {
-    const header = await mountHeader("header-placeholder", { addProfileMenu: false });
-    if (!header || !header.left) return;
-    const back = document.createElement("button");
-    back.type = "button";
-    back.className = "header-back::before";
-    back.setAttribute("aria-label", "뒤로가기");
-    back.innerHTML = `
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
-           xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <path d="M15 19l-7-7 7-7" stroke="#111827" stroke-width="2"
-              stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>`;
-    header.left.appendChild(back);
-    back.addEventListener("click", () => {
-      window.location.href = "/pages/login/login.html";
-    });
-  })();
-</script>
+    import { mountHeader } from "/component/header/insertHeader.js";
+    (async () => {
+      await mountHeader("header-placeholder", {
+        addProfileMenu: false,
+        addBackButton: true,
+        backHref: "/pages/login/login.html",
+      });
+    })();
+  </script>
   <script src="signup.js"></script>
 </body>
 </html>

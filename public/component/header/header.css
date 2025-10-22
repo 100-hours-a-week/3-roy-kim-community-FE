@@ -39,20 +39,16 @@ body {
 
 /* 회원가입에서 뒤로가기 버튼  */
 .header-back {
-  appearance: none;
-  border: none;
+  border: 0;
   background: transparent;
+  padding: 8px;
   cursor: pointer;
-  width: 36px;
-  height: 36px;
-  border-radius: 8px;
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  position: relative;
 }
+.header-back svg { width: 24px; height: 24px; }
 
-.header-back::before {
+/* .header-back::before {
   content: '';
   display: inline-block;
   width: 12px;
@@ -61,7 +57,7 @@ body {
   border-bottom: 3px solid #111827;
   transform: rotate(45deg);
   margin-left: 0;
-}
+} */
 
 .header-back:hover { background: #eceff3; }
   
