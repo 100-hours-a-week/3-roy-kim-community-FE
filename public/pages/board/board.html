@@ -10,13 +10,13 @@
 </head>
 <body>
   <div id="header-placeholder"></div>
-  <header>
-    <h1>안녕하세요,아무말 대잔치 게시판 입니다
-    </h1>
+  <div class="board-header">
+    <h1>안녕하세요,</h1>
+    <h1>아무말 대잔치 게시판 입니다</h1>
     <div class="actions">
       <a class="btn primary" id="go-write" href="/pages/postAdd/postAdd.html">글쓰기</a>
     </div>
-  </header>
+  </div>
 
   <main>
     <section id="board" aria-live="polite">
@@ -30,8 +30,8 @@
     (async () => {
       await mountHeader("header-placeholder", {
         addProfileMenu: true,
-        addBackButton: true,
-        backHref: "/pages/", // go-back destination for board page
+        addBackButton: false,
+        backHref: null
       });
     })();
   </script>
