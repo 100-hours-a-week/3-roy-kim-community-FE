@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>아무말 대잔치 | 게시판</title>
+  <link rel="stylesheet" href="./board.css" />
+  <script defer src="./board.js"></script>
+</head>
+<body>
+  <header>
+    <h1>안녕하세요,
+      아무말 대잔치 게시판 입니다
+    </h1>
+    <div class="actions">
+      <a class="btn primary" id="go-write" href="/pages/postAdd/postAdd.html">글쓰기</a>
+    </div>
+  </header>
+
+  <main>
+    <section id="board" aria-live="polite">
+      <div id="list" class="list"></div>
+      <p id="empty" class="empty" style="display:none;">게시글이 없습니다.</p>
+      <p id="error" class="empty" style="display:none; color:#ef4444;">목록을 불러오지 못했습니다.</p>
+    </section>
+  </main>
+</body>
+</html>

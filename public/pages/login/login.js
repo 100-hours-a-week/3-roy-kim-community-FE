@@ -1,8 +1,8 @@
 
 
 // === Backend config ===
-const BACKEND_BASE_URL = "http://localhost:8080"; // change if your Spring Boot server runs elsewhere
-const LOGIN_ENDPOINT = "/users/login"; // matches UserController @PostMapping("/login")
+const BACKEND_BASE_URL = "http://localhost:8080"; 
+const LOGIN_ENDPOINT = "/users/login"; 
 const TIMEOUT_MS = 15000;
 
 // Elements (optional – code checks for nulls)
@@ -90,7 +90,7 @@ if (form) {
       if (successBox) successBox.textContent = "로그인 성공!";
 
       // Redirect to post/boards page after successful login
-      window.location.href = "/pages/post/boards.html"; // adjust path if needed
+      window.location.href = "/pages/board/board.html"; // adjust path if needed
     } catch (err) {
       if (errorBox) {
         errorBox.textContent = err.message || "로그인에 실패했습니다.";
