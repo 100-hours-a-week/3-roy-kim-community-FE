@@ -45,14 +45,10 @@
       <div id="message" aria-live="polite"></div>
     </section>
   </main>
-  <script>
-  fetch("/component/header/header.html")
-    .then(res => res.text())
-    .then(html => {
-      document.getElementById("header-placeholder").innerHTML = html;
-    });
-</script>
-  <!-- Page-specific scripts -->
+  <script type="module">
+    import { mountHeader } from "/component/header/insertHeader.js";
+    mountHeader();
+  </script>
   <script src="login.js"></script>
 </body>
 </html>
