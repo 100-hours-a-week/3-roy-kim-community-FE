@@ -30,3 +30,21 @@ textarea:focus{border-color:#c7d2fe;box-shadow:0 0 0 3px #eef2ff}
   .actions{justify-content:stretch}
   .actions .btn{flex:1}
 }
+
+input[type="text"] {
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px;
+  font-size: 15px;
+  outline: none;
+}
+
+input[type="text"]:focus {
+  border-color: #c7d2fe;
+  box-shadow: 0 0 0 3px #eef2ff;
+}
+
+.page-title {
+  text-align: center;
+}
