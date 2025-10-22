@@ -132,3 +132,6 @@ document.addEventListener("click", (e) => {
     window.location.href = "/pages/login/login.html"; // adjust path if needed
   }
 });
+
+
+// 헤더 부분
