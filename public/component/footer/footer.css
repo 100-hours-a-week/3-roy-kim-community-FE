@@ -1,15 +1,14 @@
 .site-footer {
   width: 100%;
   text-align: center;
-  padding: 24px 0;
-  border-top: 1px solid #ddd;
+  padding: 12px 0;
   color: #555;
   background-color: #f4f6f9;
   font-size: 14px;
 }
 
 .footer-links {
-  margin-top: px;
+  margin-top: 3px;
 }
 
 .footer-links a {
