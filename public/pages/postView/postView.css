@@ -89,8 +89,8 @@ html, body {
   transition: background-color .2s;
 }
 .btn:hover { background-color: var(--primary-hover); }
-.btn-edit { }
-.btn-delete { background-color: var(--danger); }
+.btn-edit { background-color: #ccc}
+.btn-delete { background-color: #ccc }
 .btn-delete:hover { background-color: var(--danger-hover); }
 
 /* Divider */
