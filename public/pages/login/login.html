@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -30,18 +28,18 @@
         <div class="field">
           <label for="email">이메일*</label>
           <div>
-            <input id="email" name="email" type="email" placeholder="you@example.com" required autocomplete="email" />
+            <input id="email" name="email" type="email" placeholder="you@example.com" required autocomplete="email" aria-describedby="email-help" />
           </div>
-          <div class="hint" data-for="email" aria-live="polite"></div>
+          <small id="email-help" class="input-help" aria-live="polite"></small>
         </div>
 
         <!-- Password -->
         <div class="field">
           <label for="password">비밀번호*</label>
           <div>
-            <input id="password" name="password" type="password" placeholder="비밀번호" required minlength="8" autocomplete="current-password" />
+            <input id="password" name="password" type="password" placeholder="비밀번호" required minlength="8" autocomplete="current-password" aria-describedby="password-help" />
           </div>
-          <div class="hint" data-for="password" aria-live="polite"></div>
+          <small id="password-help" class="input-help" aria-live="polite"></small>
         </div>
 
         <!-- Actions -->
@@ -51,6 +49,8 @@
         </div>
       </form>
 
+      <div id="login-error" class="input-help" role="alert" aria-live="assertive" style="text-align:center;"></div>
+      <div id="login-success" role="status" aria-live="polite" style="text-align:center; color:#2ecc71; margin-top:6px;"></div>
       <div id="message" aria-live="polite"></div>
     </section>
   </main>
