@@ -69,7 +69,7 @@
   <script type="module">
   import { mountHeader } from "/component/header/insertHeader.js";
   (async () => {
-    const header = await mountHeader();
+    const header = await mountHeader("header-placeholder", { addProfileMenu: false });
     if (!header || !header.left) return;
     const back = document.createElement("button");
     back.type = "button";
