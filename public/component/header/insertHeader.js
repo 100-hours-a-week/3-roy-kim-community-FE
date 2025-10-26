@@ -1,11 +1,19 @@
-// Reusable header injector + optional profile menu
+// Reusable header injector + optional profile menu and back button
 // Usage:
 //   import { mountHeader } from "/component/header/insertHeader.js";
-//   const header = await mountHeader(); // adds avatar + dropdown by default
-//   // or: await mountHeader("header-placeholder", { addProfileMenu: false });
+//   const header = await mountHeader(); // default: adds avatar menu, no back button
+//   // Examples:
+//   // await mountHeader("header-placeholder", { addProfileMenu: false });
+//   // await mountHeader("header-placeholder", { addBackButton: true, backHref: "/pages/home/home.html" });
+//   // await mountHeader("header-placeholder", { addProfileMenu: false, addBackButton: true, backHref: "/pages/login/login.html" });
 
 export async function mountHeader(placeholderId = "header-placeholder", opts = {}) {
-  const { addProfileMenu = true } = opts;
+  const {
+    addProfileMenu = true,
+    addBackButton = false,
+    backHref = null, // when set, back button navigates here (ignores history)
+  } = opts;
+
   const mount = document.getElementById(placeholderId);
   if (!mount) {
     console.warn(`[mountHeader] Placeholder #${placeholderId} not found.`);
@@ -29,14 +37,53 @@ export async function mountHeader(placeholderId = "header-placeholder", opts = {
     left: document.getElementById("header-left"),
     right: document.getElementById("header-right"),
     title: mount.querySelector(".header-title"),
+    back: null,
+    avatar: null,
   };
+
+  // Optionally add the left-side back button (with fixed destination)
+  if (addBackButton && refs.left) {
+    refs.back = addBackButtonTo(refs.left, backHref);
+  }
 
   // Optionally add the right-side profile avatar + dropdown
   if (addProfileMenu && refs.right) {
-    addProfileDropdown(refs.right);
+    refs.avatar = addProfileDropdown(refs.right);
   }
 
   return refs;
+}
+
+function addBackButtonTo(container, href) {
+  // Create a semantic button with an inline SVG arrow (no reliance on ::before)
+  const btn = document.createElement("button");
+  btn.type = "button";
+  btn.className = "header-back"; // style in CSS as needed
+  btn.setAttribute("aria-label", "뒤로가기");
+  btn.innerHTML = `
+    <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true">
+      <path d="M15.5 19l-7-7 7-7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  `;
+
+  // Navigate to a fixed URL when pressed; fallback to root if none provided
+  const target = typeof href === "string" && href.trim() ? href : "/";
+  btn.addEventListener("click", () => {
+    try {
+      window.location.assign(target);
+    } catch (_) {
+      window.location.href = target;
+    }
+  });
+
+  // Prefer prepending so it sits at the far-left by default
+  if (container.firstChild) {
+    container.insertBefore(btn, container.firstChild);
+  } else {
+    container.appendChild(btn);
+  }
+
+  return btn;
 }
 
 function addProfileDropdown(container) {
@@ -91,4 +138,6 @@ function addProfileDropdown(container) {
       window.location.href = "/pages/login/login.html";
     }
   });
+
+  return img;
 }
