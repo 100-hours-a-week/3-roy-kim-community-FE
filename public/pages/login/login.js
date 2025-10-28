@@ -2,6 +2,7 @@
 const BACKEND_BASE_URL = "http://localhost:8080"; 
 const LOGIN_ENDPOINT = "/users/login"; 
 const TIMEOUT_MS = 15000;
+const WITH_CREDENTIALS = "include"; // 쿠키 받기 위해
 
 function setHelp(id, msg){ const el = document.getElementById(id); if(el) el.textContent = msg || ""; }
 function setFieldState(input, ok){ if(!input) return; input.classList.toggle("is-valid", !!ok); input.classList.toggle("is-invalid", !ok); }
@@ -48,6 +49,7 @@ async function postLogin(payload) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
       credentials: "omit",
+      credentials: WITH_CREDENTIALS,
       signal: controller.signal,
     });
   } catch (err) {
@@ -101,19 +103,12 @@ if (form) {
 
     try {
       const result = await postLogin({ email, password });
-
-      // If the backend returns a token string, store it. Otherwise store whatever came back.
-      const tokenLike = typeof result === "string" ? result : (result && (result.token || result.accessToken || result.message)) || "";
-      if (tokenLike) {
-        try { localStorage.setItem("authToken", tokenLike); } catch (_) {}
-      } else {
-        try { localStorage.setItem("loginResult", JSON.stringify(result)); } catch (_) {}
-      }
-
       if (errorBox) errorBox.textContent = "";
       if (successBox) successBox.textContent = "로그인 성공!";
 
-      
+      try {
+        await fetch(`${BACKEND_BASE_URL}/users/me`, { credentials: WITH_CREDENTIALS});
+      } catch (_) {}
       window.location.href = "/pages/board/board.html"; 
     } catch (err) {
       const msg = "*아이디 또는 비밀번호를 확인해주세요";

@@ -120,7 +120,7 @@ function addProfileDropdown(container) {
     if (!container.contains(e.target)) closeMenu();
   });
 
-  menu.addEventListener("click", (e) => {
+  menu.addEventListener("click", async (e) => {
     const btn = e.target.closest("button");
     if (!btn) return;
     const act = btn.getAttribute("data-action");
@@ -129,12 +129,11 @@ function addProfileDropdown(container) {
     } else if (act === "password") {
       window.location.href = "/pages/updateUserPassword/updateUserPassword.html"; // adjust if needed
     } else if (act === "logout") {
-      try {
-        localStorage.removeItem("authToken");
-        localStorage.removeItem("profilePicture");
-        localStorage.removeItem("nickname");
-        localStorage.removeItem("userId");
-      } catch(_) {}
+      await fetch("http://localhost:8080/users/logout", {
+        method: "POST",
+        credentials: "include"
+      });
+      // Then redirect or update UI
       window.location.href = "/pages/login/login.html";
     }
   });
