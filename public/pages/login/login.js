@@ -107,7 +107,7 @@ if (form) {
       if (successBox) successBox.textContent = "로그인 성공!";
 
       try {
-        await fetch(`${BACKEND_BASE_URL}/users/me`, { credentials: WITH_CREDENTIALS});
+        await fetch(`${BACKEND_BASE_URL}/users/me`, {credentials: WITH_CREDENTIALS});
       } catch (_) {}
       window.location.href = "/pages/board/board.html"; 
     } catch (err) {
