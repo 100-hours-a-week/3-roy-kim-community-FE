@@ -3,6 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="/component/auth/authGuard.js"></script>
+  <script>
+    if (window.Auth) {
+      Auth.ensureAuthPage();
+    } else {
+      window.addEventListener("DOMContentLoaded", () => window.Auth?.ensureAuthPage());
+    }
+  </script>
   <title>아무말 대잔치 | 게시판</title>
   <link rel="stylesheet" href="./board.css" />
   <link rel="stylesheet" href="/component/header/header.css" />
