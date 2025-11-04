@@ -1,17 +1,42 @@
-
-
 // === Backend config ===
 const BACKEND_BASE_URL = "http://localhost:8080"; 
 const LOGIN_ENDPOINT = "/users/login"; 
 const TIMEOUT_MS = 15000;
+const WITH_CREDENTIALS = "include"; // 쿠키 받기 위해
 
-// Elements (optional – code checks for nulls)
+function setHelp(id, msg){ const el = document.getElementById(id); if(el) el.textContent = msg || ""; }
+function setFieldState(input, ok){ if(!input) return; input.classList.toggle("is-valid", !!ok); input.classList.toggle("is-invalid", !ok); }
+function validateEmailValue(v){
+  if(!v) return {ok:false, msg:"*이메일을 입력해주세요."};
+  if(v.length < 5) return {ok:false, msg:"*올바른 이메일 주소 형식을 입력해주세요. (예: example@example.com)"};
+  const re = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/; if(!re.test(v)) return {ok:false, msg:"*올바른 이메일 주소 형식을 입력해주세요. (예: example@example.com)"};
+  return {ok:true, msg:""};
+}
+function validatePasswordValue(v){
+  if(!v) return {ok:false, msg:"*비밀번호를 입력해주세요"};
+  if(v.length < 8 || v.length > 20) return {ok:false, msg:"*비밀번호는 8자 이상, 20자 이하여야 합니다."};
+  const up=/[A-Z]/.test(v), lo=/[a-z]/.test(v), di=/\d/.test(v), sp=/[^\w\s]/.test(v);
+  if(!(up&&lo&&di&&sp)) return {ok:false, msg:"*대문자, 소문자, 숫자, 특수문자를 각각 최소 1개 포함해야 합니다."};
+  return {ok:true, msg:""};
+}
+
 const form = document.getElementById("login-form");
 const emailInput = document.getElementById("email");
 const passwordInput = document.getElementById("password");
 const submitBtn = document.getElementById("login-btn");
 const errorBox = document.getElementById("login-error");
 const successBox = document.getElementById("login-success");
+
+if(emailInput){
+  const run=()=>{ const {ok,msg}=validateEmailValue(emailInput.value.trim()); setHelp('email-help', msg); setFieldState(emailInput, ok); };
+  emailInput.addEventListener('blur', run);
+  emailInput.addEventListener('input', run);
+}
+if(passwordInput){
+  const run=()=>{ const {ok,msg}=validatePasswordValue(passwordInput.value); setHelp('password-help', msg); setFieldState(passwordInput, ok); };
+  passwordInput.addEventListener('blur', run);
+  passwordInput.addEventListener('input', run);
+}
 
 async function postLogin(payload) {
   const controller = new AbortController();
@@ -24,6 +49,7 @@ async function postLogin(payload) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
       credentials: "omit",
+      credentials: WITH_CREDENTIALS,
       signal: controller.signal,
     });
   } catch (err) {
@@ -36,7 +62,6 @@ async function postLogin(payload) {
 
   clearTimeout(timer);
 
-  // Backend returns a String; try to read as text first, then fall back to JSON
   const contentType = res.headers.get("content-type") || "";
   let dataText = "";
   let dataJson = null;
@@ -51,7 +76,6 @@ async function postLogin(payload) {
     throw new Error(msg);
   }
 
-  // Prefer text for token/message, fallback to JSON
   return dataText || dataJson || {};
 }
 
@@ -65,10 +89,11 @@ if (form) {
     const email = (emailInput && emailInput.value.trim()) || "";
     const password = (passwordInput && passwordInput.value) || "";
 
-    if (!email || !password) {
-      if (errorBox) errorBox.textContent = "이메일과 비밀번호를 입력해주세요.";
-      return;
-    }
+    const eRes = validateEmailValue(email);
+    const pRes = validatePasswordValue(password);
+    setHelp('email-help', eRes.msg); setFieldState(emailInput, eRes.ok);
+    setHelp('password-help', pRes.msg); setFieldState(passwordInput, pRes.ok);
+    if (!(eRes.ok && pRes.ok)) return;
 
     const prevText = submitBtn ? submitBtn.textContent : null;
     if (submitBtn) {
@@ -78,25 +103,16 @@ if (form) {
 
     try {
       const result = await postLogin({ email, password });
-
-      // If the backend returns a token string, store it. Otherwise store whatever came back.
-      const tokenLike = typeof result === "string" ? result : (result && (result.token || result.accessToken || result.message)) || "";
-      if (tokenLike) {
-        try { localStorage.setItem("authToken", tokenLike); } catch (_) {}
-      } else {
-        try { localStorage.setItem("loginResult", JSON.stringify(result)); } catch (_) {}
-      }
-
+      if (errorBox) errorBox.textContent = "";
       if (successBox) successBox.textContent = "로그인 성공!";
 
-      // Redirect to post/boards page after successful login
-      window.location.href = "/pages/board/board.html"; // adjust path if needed
+      try {
+        await fetch(`${BACKEND_BASE_URL}/users/me`, {credentials: WITH_CREDENTIALS});
+      } catch (_) {}
+      window.location.href = "/pages/board/board.html"; 
     } catch (err) {
-      if (errorBox) {
-        errorBox.textContent = err.message || "로그인에 실패했습니다.";
-      } else {
-        alert(err.message || "로그인에 실패했습니다.");
-      }
+      const msg = "*아이디 또는 비밀번호를 확인해주세요";
+      if (errorBox) { errorBox.textContent = msg; } else { alert(msg); }
     } finally {
       if (submitBtn) {
         submitBtn.disabled = false;

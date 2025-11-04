@@ -1,5 +1,3 @@
-
-
 /* General page layout */
 body {
   margin: 0;
@@ -21,6 +19,7 @@ body {
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   padding: 40px 32px;
   box-sizing: border-box;
+  padding-top: 110px;
 }
 
 /* Page title */
@@ -121,3 +120,9 @@ form {
     padding: 24px 20px;
   }
 }
+
+/* Inline helper + validation styles */
+.input-help { display:block; margin-top:6px; font-size:12px; color:#e53935; }
+.is-valid { border-color:#2ecc71 !important; }
+.is-invalid { border-color:#e53935 !important; }
+button[disabled]{ opacity:.6; cursor:not-allowed; }

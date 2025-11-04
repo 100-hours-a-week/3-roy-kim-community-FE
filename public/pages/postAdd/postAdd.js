@@ -1,6 +1,8 @@
 // === Backend config (wire later) ===
 const BACKEND_BASE_URL = "http://localhost:8080";
 const CREATE_ENDPOINT = "/posts"; 
+const WITH_CREDENTIALS = "include"; // 쿠키 받기 위해
+
 const TIMEOUT_MS = 15000;
 
 // Elements

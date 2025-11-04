@@ -1,5 +1,7 @@
 const BACKEND_BASE_URL = "http://localhost:8080";
 const LIST_ENDPOINT = "/board/posts"; // connect this to listRecentPosts()
+const WITH_CREDENTIALS = 'include'; // 쿠키 받기 위해
+
 
 const listEl = document.getElementById('list');
 const emptyEl = document.getElementById('empty');
@@ -82,12 +84,14 @@ function renderList(items) {
 
 
 async function fetchPosts() {
-  const res = await fetch(`${BACKEND_BASE_URL}${LIST_ENDPOINT}`);
-  if (!res.ok) throw new Error('게시글을 불러오지 못했습니다.');
+  const res = await fetch(`${BACKEND_BASE_URL}${LIST_ENDPOINT}`, {credentials: WITH_CREDENTIALS});
+  
+  if (!res.ok) throw new Error('다시 로그인해주새요');
   const data = await res.json();
   if (!Array.isArray(data)) throw new Error('서버 응답 형식이 올바르지 않습니다.');
   return data;
 }
+
 
 (async function init() {
   showSkeletons(4);
@@ -96,7 +100,11 @@ async function fetchPosts() {
     renderList(allPosts);
   } catch (err) {
     listEl.innerHTML = '';
-    errorEl.textContent = err.message || '목록을 불러오지 못했습니다.';
-    errorEl.style.display = 'block';
+    if (errorEl) {
+      errorEl.textContent = err.message || '목록을 불러오지 못했습니다.';
+      errorEl.style.display = 'block';
+    } else {
+      console.error(err);
+    }
   }
 })();
