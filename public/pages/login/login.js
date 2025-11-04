@@ -102,12 +102,21 @@ if (form) {
     try {
       const result = await postLogin({ email, password });
 
-      // If the backend returns a token string, store it. Otherwise store whatever came back.
-      const tokenLike = typeof result === "string" ? result : (result && (result.token || result.accessToken || result.message)) || "";
-      if (tokenLike) {
-        try { localStorage.setItem("authToken", tokenLike); } catch (_) {}
+      const tokenLike = typeof result === 'string'
+        ? result
+        : (result && (result.accessToken || result.token || result.message)) || '';
+
+      if (tokenLike && typeof tokenLike === 'string') {
+        try { localStorage.setItem('authToken', tokenLike); } catch (_) {}
+        try { sessionStorage.setItem('accessToken', tokenLike); } catch (_) {}
       } else {
-        try { localStorage.setItem("loginResult", JSON.stringify(result)); } catch (_) {}
+        try { localStorage.setItem('loginResult', JSON.stringify(result)); } catch (_) {}
+        try {
+          const maybe = result && (result.accessToken || result.token || result.message);
+          if (maybe && typeof maybe === 'string') {
+            sessionStorage.setItem('accessToken', maybe);
+          }
+        } catch (_) {}
       }
 
       if (errorBox) errorBox.textContent = "";

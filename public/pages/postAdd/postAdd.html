@@ -4,6 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>게시글 작성</title>
+  <script type="module">
+    import { ensureAuthPage } from "/auth/authGuard.js";
+    await ensureAuthPage();
+  </script>
   <link rel="stylesheet" href="/component/header/header.css" />
   <link rel="stylesheet" href="./postAdd.css" />
   <script type="module">

@@ -125,14 +125,21 @@ function addProfileDropdown(container) {
     if (!btn) return;
     const act = btn.getAttribute("data-action");
     if (act === "profile") {
-      window.location.href = "/pages/updateUserInfo/updateUserInfo.html"; // adjust if needed
+      window.location.href = "/pages/updateUserInfo/updateUserInfo.html"; 
     } else if (act === "password") {
-      window.location.href = "/pages/updateUserPassword/updateUserPassword.html"; // adjust if needed
-    } else if (act === "logout") {
-        await fetch("http://localhost:8080/users/logout", {
-        method: "POST"
-      });
-      window.location.href = "/pages/login/login.html";
+      window.location.href = "/pages/updateUserPassword/updateUserPassword.html"; 
+    } else if (act === 'logout') {
+      try {
+        await fetch('http://localhost:8080/users/logout', {
+          method: 'POST',
+          credentials: 'include',
+          keepalive: true
+        });
+      } catch (_) {}
+      try { sessionStorage.removeItem('accessToken'); } catch (_) {}
+      try { localStorage.removeItem('authToken'); } catch (_) {}
+      try { localStorage.removeItem('loginResult'); } catch (_) {}
+      window.location.href = '/pages/login/login.html';
     }
   });
 
