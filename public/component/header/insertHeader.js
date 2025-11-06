@@ -130,7 +130,7 @@ function addProfileDropdown(container) {
       window.location.href = "/pages/updateUserPassword/updateUserPassword.html"; 
     } else if (act === 'logout') {
       try {
-        await fetch('http://localhost:8080/users/logout', {
+        await fetch(API.url(API.ENDPOINTS.LOGOUT), {
           method: 'POST',
           credentials: 'include',
           keepalive: true

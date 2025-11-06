@@ -1,4 +1,3 @@
-const BACKEND_BASE_URL = "http://localhost:8080";
 const LIST_ENDPOINT = "/board/posts"; // connect this to listRecentPosts()
 
 const listEl = document.getElementById('list');
@@ -82,7 +81,7 @@ function renderList(items) {
 
 
 async function fetchPosts() {
-  const res = await fetch(`${BACKEND_BASE_URL}${LIST_ENDPOINT}`);
+  const res = await fetch(API.url(LIST_ENDPOINT), { credentials: 'include' });
   if (!res.ok) throw new Error('게시글을 불러오지 못했습니다.');
   const data = await res.json();
   if (!Array.isArray(data)) throw new Error('서버 응답 형식이 올바르지 않습니다.');

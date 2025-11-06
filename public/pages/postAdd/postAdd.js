@@ -1,5 +1,4 @@
 // === Backend config (wire later) ===
-const BACKEND_BASE_URL = "http://localhost:8080";
 const CREATE_ENDPOINT = "/posts"; 
 const TIMEOUT_MS = 15000;
 
@@ -16,9 +15,10 @@ async function createPost(payload){
   const timer = setTimeout(() => controller.abort(), TIMEOUT_MS);
   let res;
   try{
-    res = await fetch(`${BACKEND_BASE_URL}${CREATE_ENDPOINT}`, {
+    res = await fetch(API.url(CREATE_ENDPOINT), {
       method: "POST",
       headers: { "Content-Type": "application/json" },
+      credentials: "include",
       body: JSON.stringify(payload),
       signal: controller.signal,
     });

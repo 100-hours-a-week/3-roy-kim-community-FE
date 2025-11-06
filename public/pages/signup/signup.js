@@ -1,8 +1,7 @@
-// === Backend config ===
-const BACKEND_BASE_URL = "http://localhost:8080"; 
-const SIGNUP_ENDPOINT = "/users/signup"; 
-const EMAIL_DUP_ENDPOINT = "/users/check-email";      
-const NICK_DUP_ENDPOINT = "/users/check-nickname";   
+// === Backend config (from /lib/config.js: window.API) ===
+const SIGNUP_ENDPOINT = API.ENDPOINTS.SIGNUP;
+const EMAIL_DUP_ENDPOINT = API.ENDPOINTS.EMAIL_DUP;
+const NICK_DUP_ENDPOINT = API.ENDPOINTS.NICK_DUP;
 const TIMEOUT_MS = 15000;
 
 const form = document.getElementById("signup-form");
@@ -66,7 +65,7 @@ async function checkDuplicate(kind, value) {
   const endpoint = kind === "email" ? EMAIL_DUP_ENDPOINT : NICK_DUP_ENDPOINT;
   if (!endpoint) return null; 
 
-  const url = new URL(BACKEND_BASE_URL + endpoint);
+  const url = new URL(API.url(endpoint));
   url.searchParams.set(kind, value);
 
   const controller = new AbortController();
@@ -208,11 +207,11 @@ async function postSignup(payload) {
 
   let res;
   try {
-    res = await fetch(`${BACKEND_BASE_URL}${SIGNUP_ENDPOINT}`, {
+    res = await fetch(API.url(SIGNUP_ENDPOINT), {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
-      credentials: "omit",
+      credentials: "include",
       signal: controller.signal,
     });
   } catch (err) {

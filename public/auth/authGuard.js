@@ -25,7 +25,7 @@ export async function ensureAuthPage() {
   }
 
   try {
-    const res = await fetch('http://localhost:8080/users/me', {
+    const res = await fetch(API.url(API.ENDPOINTS.USERS_ME), {
       headers: { Authorization: `Bearer ${at}` },
       credentials: 'include'
     });

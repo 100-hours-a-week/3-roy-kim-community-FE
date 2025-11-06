@@ -1,6 +1,4 @@
-// === Backend config ===
-const BACKEND_BASE_URL = "http://localhost:8080"; 
-const LOGIN_ENDPOINT = "/users/login"; 
+// === Backend config (from /lib/config.js: window.API) ===
 const TIMEOUT_MS = 15000;
 
 function setHelp(id, msg){ const el = document.getElementById(id); if(el) el.textContent = msg || ""; }
@@ -19,7 +17,7 @@ function validatePasswordValue(v){
   return {ok:true, msg:""};
 }
 
-const form = document.getElementById("login-form");
+const form = document.getElementById("loginForm");
 const emailInput = document.getElementById("email");
 const passwordInput = document.getElementById("password");
 const submitBtn = document.getElementById("login-btn");
@@ -43,11 +41,11 @@ async function postLogin(payload) {
 
   let res;
   try {
-    res = await fetch(`${BACKEND_BASE_URL}${LOGIN_ENDPOINT}`, {
+    res = await fetch(API.url(API.ENDPOINTS.LOGIN), {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
-      credentials: "omit",
+      credentials: "include",
       signal: controller.signal,
     });
   } catch (err) {
