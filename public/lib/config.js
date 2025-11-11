@@ -1,4 +1,4 @@
-const BACKEND_BASE_URL = 'http://localhost:8080';
+const BACKEND_BASE_URL = 'http://ec2-3-36-88-131.ap-northeast-2.compute.amazonaws.com:8080';
 
 window.API = {
   BASE_URL: BACKEND_BASE_URL,
